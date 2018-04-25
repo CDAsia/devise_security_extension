@@ -1,5 +1,3 @@
-# -*- encoding: utf-8 -*-
-
 $LOAD_PATH.push File.expand_path('../lib', __FILE__)
 require 'devise_security_extension/version'
 
@@ -21,7 +19,9 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '>= 1.9.3'
   s.extra_rdoc_files      = %w(LICENSE.txt README.md)
 
+  s.add_dependency('activerecord', '>= 4.1.0', '< 5.2')
   s.add_dependency('devise', '>= 3.0.0', '< 5.0')
+  s.add_dependency('ipaddress')
 
   s.add_development_dependency('appraisal')
   s.add_development_dependency('coveralls')

@@ -4,7 +4,7 @@ module Devise
 
     def show
       resource_for_remote_ip
-      return redirect_to new_session_path(resource_name) unless resource
+      return redirect_to new_session_path(resource_name) unless resource && resource.active_for_authentication?
       yield resource if block_given?
       respond_with(resource, serialize_options)
     end
