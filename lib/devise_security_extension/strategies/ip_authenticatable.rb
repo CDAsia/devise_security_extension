@@ -20,7 +20,9 @@ module Devise
       include Recaptcha::Verify
 
       def valid?
-        params.key?('g-recaptcha-response') && super
+        mapping.to.authenticatable_ip_class.constantize.to_adapter.find_first(ip_address: remote_ip) && 
+          params.key?('g-recaptcha-response') &&
+          super
       end
 
       def authenticate!
