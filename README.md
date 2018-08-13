@@ -1,4 +1,4 @@
-# Devise Security Extension [![Build Status](https://travis-ci.org/itsmechlark/devise_security_extension.svg?branch=dev)](https://travis-ci.org/itsmechlark/devise_security_extension)[![Coverage Status](https://coveralls.io/repos/github/itsmechlark/devise_security_extension/badge.svg?branch=dev)](https://coveralls.io/github/itsmechlark/devise_security_extension?branch=dev)
+# Devise Security Extension [![Build Status](https://travis-ci.org/itsmechlark/devise_security_extension.svg?branch=dev)](https://travis-ci.org/itsmechlark/devise_security_extension)[![Coverage Status](https://coveralls.io/repos/github/itsmechlark/devise_security_extension/badge.svg?branch=dev)](https://coveralls.io/github/itsmechlark/devise_security_extension?branch=dev) [![Open Source Helpers](https://www.codetriage.com/itsmechlark/devise_security_extension/badges/users.svg)](https://www.codetriage.com/itsmechlark/devise_security_extension)
 
 An enterprise security extension for [Devise](https://github.com/plataformatec/devise), trying to meet industrial standard security demands for web applications.
 
