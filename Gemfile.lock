@@ -179,7 +179,7 @@ GEM
       nokogiri (>= 1.2.0)
       rack (>= 1.0)
       rack-test (>= 0.5.3)
-    yard (0.8.7.6)
+    yard (0.9.20)
 
 PLATFORMS
   ruby
