@@ -74,7 +74,7 @@ module Devise
       end
 
       def reject_session_on_limit
-        self.class.reject_session_on_limit
+        record.try(:reject_session_on_limit) || self.class.reject_session_on_limit
       end
 
       private
