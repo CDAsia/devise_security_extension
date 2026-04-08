@@ -19,6 +19,6 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '>= 1.9.3'
   s.extra_rdoc_files      = ['LICENSE.txt', 'README.md']
 
-  s.add_dependency('devise', '>= 3.0.0', '< 5.0')
+  s.add_dependency('devise', '>= 3.0.0', '< 6.0')
 end
 
