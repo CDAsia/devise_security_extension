@@ -77,8 +77,8 @@ module Devise
   mattr_accessor :session_limitable_class
   @@session_limitable_class = 'DeviseSecurityExtension::SessionLimit'
 
-  mattr_accessor :limit_session_to
-  @@limit_session_to = 1
+  mattr_accessor :sessions_count_limit
+  @@sessions_count_limit = 1
 
   mattr_accessor :timeout_session_in
   @@timeout_session_in = nil

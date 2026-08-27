@@ -17,7 +17,7 @@ module Devise
       end
 
       def self.required_fields(klass)
-        [:session_limitable_class, :limit_session_to, :timeout_session_in, :reject_session_on_limit]
+        [:session_limitable_class, :sessions_count_limit, :timeout_session_in, :reject_session_on_limit]
       end
 
       # Create new limitable session
@@ -61,8 +61,8 @@ module Devise
         session_limitable_adapter.find_first options
       end
 
-      def limit_session_to
-        self.class.limit_session_to
+      def sessions_count_limit
+        self.class.sessions_count_limit
       end
 
       def timeout_session_in
@@ -97,7 +97,7 @@ module Devise
       # Check if it will allow authentication and remove session if possible.
       #
       def authenticate_limitable?
-        return true if limit_session_to > session_limits.count
+        return true if sessions_count_limit > session_limits.count
         opts = session_limitable_condition(order: [:last_accessed_at, :asc])
         if reject_session_on_limit
           # When +reject_session_on_limit+ is true, check for session that already timeout.
@@ -122,7 +122,7 @@ module Devise
 
       module ClassMethods
         ::Devise::Models.config self, :session_limitable_class,
-                                :limit_session_to, :timeout_session_in,
+                                :sessions_count_limit, :timeout_session_in,
                                 :reject_session_on_limit
       end
     end

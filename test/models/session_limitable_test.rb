@@ -4,7 +4,7 @@ require 'test_models'
 class LimitableTest < ActiveSupport::TestCase
   test 'required_fields should contain the fields that Devise uses' do
     assert_same_content Devise::Models::SessionLimitable.required_fields(User), [:session_limitable_class,
-                                                                                 :limit_session_to,
+                                                                                 :sessions_count_limit,
                                                                                  :timeout_session_in,
                                                                                  :reject_session_on_limit]
   end
@@ -47,7 +47,7 @@ class LimitableTest < ActiveSupport::TestCase
   end
 
   test 'reject third session when on limit' do
-    swap Devise, limit_session_to: 2, timeout_session_in: 30.minutes do
+    swap Devise, sessions_count_limit: 2, timeout_session_in: 30.minutes do
       user = create_user
       assert_not_empty user.log_limitable_request!
       assert_not_empty user.log_limitable_request!
