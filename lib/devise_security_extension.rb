@@ -80,8 +80,8 @@ module Devise
   mattr_accessor :sessions_count_limit
   @@sessions_count_limit = 1
 
-  mattr_accessor :timeout_session_in
-  @@timeout_session_in = nil
+  mattr_accessor :sessions_expiration
+  @@sessions_expiration = nil
 
   mattr_accessor :reject_session_on_limit
   @@reject_session_on_limit = true

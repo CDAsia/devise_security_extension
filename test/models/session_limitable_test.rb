@@ -5,7 +5,7 @@ class LimitableTest < ActiveSupport::TestCase
   test 'required_fields should contain the fields that Devise uses' do
     assert_same_content Devise::Models::SessionLimitable.required_fields(User), [:session_limitable_class,
                                                                                  :sessions_count_limit,
-                                                                                 :timeout_session_in,
+                                                                                 :sessions_expiration,
                                                                                  :reject_session_on_limit]
   end
 
@@ -34,20 +34,20 @@ class LimitableTest < ActiveSupport::TestCase
 
   test 'should return false when on maximum session & reject session on limit' do
     timeout = 15.minutes
-    swap Devise, timeout_session_in: timeout do
+    swap Devise, sessions_expiration: timeout do
       user = create_user
       assert_not_empty user.log_limitable_request!
 
       assert_not user.log_limitable_request!
 
-      new_time = (user.timeout_session_in + 2.seconds).from_now
+      new_time = (user.sessions_expiration + 2.seconds).from_now
       Time.stubs(:now).returns(new_time)
       assert_not_empty user.log_limitable_request!
     end
   end
 
   test 'reject third session when on limit' do
-    swap Devise, sessions_count_limit: 2, timeout_session_in: 30.minutes do
+    swap Devise, sessions_count_limit: 2, sessions_expiration: 30.minutes do
       user = create_user
       assert_not_empty user.log_limitable_request!
       assert_not_empty user.log_limitable_request!
@@ -62,13 +62,13 @@ class LimitableTest < ActiveSupport::TestCase
     assert user.accept_limitable_token?(token)
   end
 
-  test 'use timeout_in if timeout_session_in not set' do
+  test 'use timeout_in if sessions_expiration not set' do
     timeout_in = 30.minutes
-    swap Devise, timeout_in: timeout_in, timeout_session_in: nil do
+    swap Devise, timeout_in: timeout_in, sessions_expiration: nil do
       user = create_user
-      assert user.timeout_session_in == timeout_in, <<-EOT
+      assert user.sessions_expiration == timeout_in, <<-EOT
                 timeout_in: #{timeout_in}
-        timeout_session_in: #{user.timeout_session_in}
+        sessions_expiration: #{user.sessions_expiration}
       EOT
     end
   end
