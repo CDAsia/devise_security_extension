@@ -1,3 +1,5 @@
+require 'devise_security_extension/old_password'
+
 module Devise
   module Models
 
@@ -6,7 +8,7 @@ module Devise
       extend  ActiveSupport::Concern
 
       included do
-        has_many :old_passwords, :as => :password_archivable, :dependent => :destroy
+        has_many :old_passwords, class_name: password_archivable_class, :as => :password_archivable, :dependent => :destroy
         before_update :archive_password
         validate :validate_password_archive
       end
@@ -27,7 +29,7 @@ module Devise
 
         if self.class.deny_old_passwords > 0 and not self.password.nil?
           old_passwords_including_cur_change = self.old_passwords.order(:id).reverse_order.limit(self.class.deny_old_passwords).to_a
-          old_passwords_including_cur_change << OldPassword.new(old_password_params)  # include most recent change in list, but don't save it yet!
+          old_passwords_including_cur_change << old_password_class.new(old_password_params)  # include most recent change in list, but don't save it yet!
           old_passwords_including_cur_change.each do |old_password|
             dummy                    = self.class.new
             dummy.encrypted_password = old_password.encrypted_password
@@ -50,6 +52,10 @@ module Devise
         self.class.password_archiving_count
       end
 
+      def old_password_class
+        self.class.password_archivable_class.constantize
+      end
+
       # archive the last password before save and delete all to old passwords from archive
       def archive_password
         if self.encrypted_password_changed?
@@ -70,7 +76,7 @@ module Devise
       end
 
       module ClassMethods
-        ::Devise::Models.config(self, :password_archiving_count, :deny_old_passwords)
+        ::Devise::Models.config(self, :password_archivable_class, :password_archiving_count, :deny_old_passwords)
       end
     end
   end

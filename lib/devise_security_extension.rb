@@ -18,6 +18,9 @@ module Devise
   mattr_accessor :password_archiving_count
   @@password_archiving_count = 5
 
+  mattr_accessor :password_archivable_class
+  @@password_archivable_class = 'DeviseSecurityExtension::OldPassword'
+
   # Deny old password (true, false, count)
   mattr_accessor :deny_old_passwords
   @@deny_old_passwords = true
@@ -110,5 +113,4 @@ Devise.add_module :session_traceable, :model => 'devise_security_extension/model
 require 'devise_security_extension/routes'
 require 'devise_security_extension/rails'
 require 'devise_security_extension/orm/active_record'
-require 'devise_security_extension/models/old_password'
 require 'devise_security_extension/models/security_question'
