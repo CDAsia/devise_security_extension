@@ -6,7 +6,7 @@ class LimitableTest < ActiveSupport::TestCase
     assert_same_content Devise::Models::SessionLimitable.required_fields(User), [:session_limitable_class,
                                                                                  :sessions_count_limit,
                                                                                  :sessions_expiration,
-                                                                                 :reject_session_on_limit]
+                                                                                 :sessions_reject_on_limit]
   end
 
   test 'should not raise exception' do
@@ -19,8 +19,8 @@ class LimitableTest < ActiveSupport::TestCase
     assert_not_empty create_user.log_limitable_request!
   end
 
-  test 'should return token even on limit if reject_session_on_limit disabled' do
-    swap Devise, reject_session_on_limit: false do
+  test 'should return token even on limit if sessions_reject_on_limit disabled' do
+    swap Devise, sessions_reject_on_limit: false do
       user = create_user
       assert_not_empty user.log_limitable_request!
 

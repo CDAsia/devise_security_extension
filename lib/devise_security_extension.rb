@@ -83,8 +83,8 @@ module Devise
   mattr_accessor :sessions_expiration
   @@sessions_expiration = nil
 
-  mattr_accessor :reject_session_on_limit
-  @@reject_session_on_limit = true
+  mattr_accessor :sessions_reject_on_limit
+  @@sessions_reject_on_limit = true
 
   mattr_accessor :paranoid_ip_verification
   @@paranoid_ip_verification = true
